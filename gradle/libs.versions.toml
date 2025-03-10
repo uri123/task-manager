@@ -1,0 +1,26 @@
+[versions]
+quarkus = "3.19.2"
+jkube-kubernetes = "1.18.1"
+
+[libraries]
+quarkus-platform = { module = "io.quarkus.platform:quarkus-bom", version.ref = "quarkus" }
+quarkus-rest = { module = "io.quarkus:quarkus-rest" }
+quarkus-rest-jackson = { module = "io.quarkus:quarkus-rest-jackson" }
+quarkus-hibernate-reactive-panache = { module = "io.quarkus:quarkus-hibernate-reactive-panache" }
+quarkus-elytron-security-common = { module = "io.quarkus:quarkus-elytron-security-common" }
+quarkus-reactive-pg-client = { module = "io.quarkus:quarkus-reactive-pg-client" }
+quarkus-arc = { module = "io.quarkus:quarkus-arc" }
+quarkus-smallrye-jwt = { module = "io.quarkus:quarkus-smallrye-jwt" }
+quarkus-smallrye-jwt-build = { module = "io.quarkus:quarkus-smallrye-jwt-build" }
+quarkus-junit5 = { module = "io.quarkus:quarkus-junit5" }
+quarkus-test-security-jwt = { module = "io.quarkus:quarkus-test-security-jwt" }
+rest-assured = { module = "io.rest-assured:rest-assured" }
+
+[plugins]
+quarkus = { id = "io.quarkus", version.ref = "quarkus" }
+jkube-kubernetes = {id = "org.eclipse.jkube.kubernetes", version.ref = "jkube-kubernetes"}
+
+[bundles]
+quarkus-build = ["quarkus-rest", "quarkus-rest-jackson", "quarkus-hibernate-reactive-panache",
+    "quarkus-elytron-security-common", "quarkus-arc", "quarkus-smallrye-jwt", "quarkus-smallrye-jwt-build"]
+quarkus-test = ["quarkus-junit5", "quarkus-test-security-jwt", "rest-assured"]

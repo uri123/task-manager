@@ -1,4 +1,4 @@
-# task-manager
+# jch14-creating-ci-pipeline
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
@@ -33,29 +33,33 @@ If you want to build an _über-jar_, execute the following command:
 ./gradlew build -Dquarkus.package.jar.type=uber-jar
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar build/*-runner.jar`.
+The application, packaged as an _über-jar_, is now runnable using `java -Dquarkus.datasource.username=postgres -Dquarkus.datasource.password=postgres -Dquarkus.datasource.reactive.url=postgresql://localhost:5432/postgres -Dquarkus.hibernate-orm.database.generation=create -jar build/jch14-creating-ci-pipeline-1.0-SNAPSHOT-runner.jar`.
 
-## Creating a native executable
+## Creating a native executable docker image
 
-You can create a native executable using:
-
-```shell script
-./gradlew build -Dquarkus.native.enabled=true
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+You can create and push application native docker image into DockeHub with command:
 
 ```shell script
-./gradlew build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true
+./gradlew clean build k8sbuild k8spush -x test -Djkube.docker.push.username=uris753 -Djkube.docker.push.password=${password} --console=plain -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true -Dquarkus.package.jar.enabled=false
+```
+and then create docker container:
+```shell script
+./docker run --network postgres -e QUARKUS_DATASOURCE_USERNAME=postgres -e QUARKUS_DATASOURCE_PASSWORD=postgres -e DATABASE_URL=postgresql://172.19.0.2:5432/postgres --name task-manager-fly -d -p 8080:8080 uris753/task-manager:fly
 ```
 
-You can then execute your native executable with: `./build/task-manager-1.0-SNAPSHOT-runner`
+You can then deploy application into Fly.io
 
 If you want to learn more about building native executables, please consult <https://quarkus.io/guides/gradle-tooling>.
 
 ## Related Guides
 
-- REST ([guide](https://quarkus.io/guides/rest)): A Jakarta REST implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
+- REST ([guide](https://quarkus.io/guides/rest)): A Jakarta REST implementation utilizing build time processing and
+  Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on
+  it.
+- Elytron Security JDBC ([guide](https://quarkus.io/guides/security-jdbc)): Secure your applications with
+  username/password stored in a database
+- Reactive PostgreSQL client ([guide](https://quarkus.io/guides/reactive-sql-clients)): Connect to the PostgreSQL
+  database using the reactive pattern
 
 ## Provided Code
 

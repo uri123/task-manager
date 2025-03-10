@@ -1,0 +1,10 @@
+FROM quay.io/quarkus/ubi9-quarkus-micro-image:2.0
+
+COPY fly/build/*-runner /deployments/application
+
+RUN chmod a+x /deployments/*
+
+CMD ./deployments/application                                               \
+         -Dquarkus.http.host=0.0.0.0                                        \
+         -Dquarkus.datasource.reactive.url=$DATABASE_URL                    \
+         -Dquarkus.hibernate-orm.database.generation=create

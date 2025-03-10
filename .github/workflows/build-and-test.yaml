@@ -26,5 +26,5 @@ jobs:
         run: chmod +x ./gradlew
       - name: Build and test
         run: ./gradlew clean build
-#      - name: Test frontend
-#        run: cd src/main/frontend && npm test -- --all --watchAll=false
+      - name: Test frontend
+        run: cd src/main/frontend && npm test -- --all --watchAll=false

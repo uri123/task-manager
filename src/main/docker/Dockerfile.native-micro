@@ -10,11 +10,11 @@
 #
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.native-micro -t quarkus/task-manager .
+# docker build -f src/main/docker/Dockerfile.native-micro -t quarkus/jch02-adding-persistence .
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 quarkus/task-manager
+# docker run -i --rm -p 8080:8080 quarkus/jch02-adding-persistence
 #
 # The `quay.io/quarkus/ubi9-quarkus-micro-image:2.0` base image is based on UBI 9.
 # To use UBI 8, switch to `quay.io/quarkus/quarkus-micro-image:2.0`.
